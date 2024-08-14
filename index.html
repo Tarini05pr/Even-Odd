@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Even or Odd Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Even or Odd Game</h2>
+        <p id="gameMessage">Let's play!</p>
+        <button onclick="startGame()">Start Game</button>
+    </div>
+
+    <script>
+        let playerName = "";
+        let playerWins = 0;
+        let playerLosses = 0;
+
+        function startGame() {
+            if (!playerName) {
+                playerName = prompt("Enter your name:");
+                if (!playerName) {
+                    alert("Please enter a valid name.");
+                    return startGame();
+                }
+            }
+            playRound();
+        }
+
+        function playRound() {
+            const playerChoice = prompt("Choose even or odd:").toLowerCase();
+            if (playerChoice !== "even" && playerChoice !== "odd") {
+                alert("Invalid choice! Please enter 'even' or 'odd'.");
+                return playRound();
+            }
+
+            const number1 = Math.floor(Math.random() * 4) + 1;
+            const number2 = Math.floor(Math.random() * 4) + 1;
+            const sum = number1 + number2;
+            const isEven = sum % 2 === 0;
+            const resultMessage = isEven ? "even" : "odd";
+
+            let result;
+            if ((isEven && playerChoice === "even") || (!isEven && playerChoice === "odd")) {
+                playerWins++;
+                result = "win";
+            } else {
+                playerLosses++;
+                result = "lose";
+            }
+
+            const message = `${playerName}, you chose ${playerChoice}, the sum was ${sum}, which is an ${resultMessage} number. You ${result}!\n` +
+                `That's ${playerWins} wins and ${playerLosses} losses!\nWould you like to play again? (y/n)`;
+            const playAgain = prompt(message).toLowerCase();
+
+            if (playAgain === "y") {
+                playRound();
+            } else {
+                alert("Thanks for playing!");
+            }
+        }
+    </script>
+</body>
+</html>
